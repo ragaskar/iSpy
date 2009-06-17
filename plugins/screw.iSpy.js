@@ -4,18 +4,18 @@ Screw.Matchers.spyOn = function(obj, methodName) {
 
 Screw.Matchers.be_called = {
   match: function(expected, actual) {
-    console.debug(arguments);
-    return (this.actual && this.actual.isSpy && this.actual.wasCalled);
+    return (actual && actual.isSpy && actual.wasCalled);
   },
 
   failure_message: function(expected, actual, not) {
-    if (!this.actual || !this.actual.isSpy) {
+    if (!actual || !actual.isSpy) {
       return 'Expected a spy, but got ' + actual + '.';
     }
-    if (!actual.wasCalled) {
-      return 'Expected spy "' + this.actual.identity + '" to have been called, but it was not.';
+    if (not && actual.wasCalled) {
+        return 'Expected spy "' + actual.identity + '" to not have been called, but it was.';
+    } else {
+      return 'Expected spy "' + actual.identity + '" to have been called, but it was not.';
     }
-    return 'mystery fail!!!!';
   }
 };
 
