@@ -29,3 +29,5 @@ Basic usage (if you've placed iSpy in /public/javascripts/iSpy):
       });
     });
 });
+
+Thanks go to Christian Williams for writing the original version of spies for Jasmine.

@@ -143,15 +143,23 @@ Screw.Unit(function () {
       expect(originalFunctionWasCalled).to(equal, true);
     });
 
-    it('calls removeAllSpies during spec finish', function() {
-      //pending.
-      var test = 'someNewScrewUnitTest';
+    describe('wonderfully hacky way to test our after behavior because of SU limitations', function () {
+      var originalRemoveAllSpies;
+      var iSpyRemoveAllSpiesWasCalled = false;
 
-      spyOn(test, 'removeAllSpies');
+      it('calls removeAllSpies during spec finish', function() {
+        originalRemoveAllSpies = iSpy.removeAllSpies;
+        iSpy.removeAllSpies = function () {
+          iSpyRemoveAllSpiesWasCalled = true;
+        };
+      });
 
-      test.someWayToRunASUTest();
+      it('calls removeAllSpies during spec finish', function() {
+        expect(iSpyRemoveAllSpiesWasCalled).to(equal, true);
+        iSpy.removeAllSpies = originalRemoveAllSpies;
 
-      expect(test.removeAllSpies).to_not(have_been_called);
+      });
+
     });
 
     it('throws an exception when some method is spied on twice', function() {
@@ -184,6 +192,22 @@ Screw.Unit(function () {
       var spyObj = iSpy.createSpyObj('BaseName', ['method1', 'method2']);
       expect(spyObj.method1.identity).to(equal, 'BaseName.method1');
       expect(spyObj.method2.identity).to(equal, 'BaseName.method2');
+    });
+
+    it("have_been_called_with should succeed if the matcher has ever been called with the passed arguments", function() {
+      var spy = iSpy.createSpy('example Spy');
+      spy('grault');
+      expect(spy).to(have_been_called_with, 'grault');
+      spy('foo', ['bar', 2], {baz: 'quux'});
+      expect(spy).to(have_been_called_with, 'foo', ['bar', 2], {baz: 'quux'});
+    });
+
+    it("have_been_called_with should fail if the matcher has never been called with the passed arguments", function() {
+      var spy = iSpy.createSpy('example Spy');
+      spy('grault');
+      expect(spy).to_not(have_been_called_with, 'foo');
+      spy('foo', ['bar', 2], {baz: 'quux'});
+      expect(spy).to_not(have_been_called_with, 'foo', ['bar', 2], {baz: 'baz'});
     });
 
   });
