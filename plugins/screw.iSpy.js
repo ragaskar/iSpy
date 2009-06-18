@@ -2,7 +2,7 @@ Screw.Matchers.spyOn = function(obj, methodName) {
   return iSpy.spyOn(obj, methodName);
 };
 
-Screw.Matchers.be_called = {
+Screw.Matchers.have_been_called = {
   match: function(expected, actual) {
     return (actual && actual.isSpy && actual.wasCalled);
   },
@@ -19,17 +19,8 @@ Screw.Matchers.be_called = {
   }
 };
 
-(function($) {
-  $(Screw).bind("before", function() {
-    function removeAllSpies() {
-      iSpy.removeAllSpies();
-    }
-
-    $('.it').bind('passed', function() {
-      removeAllSpies();
-    });
-    $('.it').bind('failed', function() {
-      removeAllSpies();
-    });
+Screw.Unit(function() {
+  after(function() {
+    iSpy.removeAllSpies();
   });
-})(jQuery);
+});
