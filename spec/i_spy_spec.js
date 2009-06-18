@@ -1,6 +1,3 @@
-require('/javascripts/iSpy/lib/iSpy');
-require('/javascripts/iSpy/plugins/screw.iSpy');
-
 Screw.Unit(function () {
   describe('base spy tests', function() {
     it('should replace the specified function with a spy object', function() {
