@@ -3,6 +3,7 @@ iSpy is a port of [Jasmine's](http://github.com/pivotal/jasmine) spies for Screw
 Basic usage (if you've placed iSpy in /public/javascripts/iSpy):
 
     require('/javascripts/iSpy/lib/iSpy');
+    require('/javascripts/iSpy/lib/jquery.print');
     require('/javascripts/iSpy/plugins/screw.iSpy');
 
     Screw.Unit(function () {

@@ -197,7 +197,7 @@ Screw.Unit(function () {
     it("have_been_called_with should succeed if the matcher has ever been called with the passed arguments", function() {
       var spy = iSpy.createSpy('example Spy');
       spy('grault');
-      expect(spy).to(have_been_called_with, 'grault');
+      expect(spy).to(have_been_called_with, ['grault']);
       spy('foo', ['bar', 2], {baz: 'quux'});
       expect(spy).to(have_been_called_with, 'foo', ['bar', 2], {baz: 'quux'});
     });
@@ -205,9 +205,9 @@ Screw.Unit(function () {
     it("have_been_called_with should fail if the matcher has never been called with the passed arguments", function() {
       var spy = iSpy.createSpy('example Spy');
       spy('grault');
-      expect(spy).to_not(have_been_called_with, 'foo');
+      expect(spy).to_not(have_been_called_with, ['foo']);
       spy('foo', ['bar', 2], {baz: 'quux'});
-      expect(spy).to_not(have_been_called_with, 'foo', ['bar', 2], {baz: 'baz'});
+      expect(spy).to_not(have_been_called_with, ['foo', ['bar', 2], {baz: 'baz'}]);
     });
 
   });
