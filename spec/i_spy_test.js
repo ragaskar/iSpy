@@ -34,8 +34,8 @@ Screw.Unit(function () {
 
       TestClass.someFunction('foo');
       TestClass.someFunction('bar');
-      expect(TestClass.someFunction.argsForCall[0]).to(equal, ['foo']);
-      expect(TestClass.someFunction.argsForCall[1]).to(equal, ['bar']);
+      expect(TestClass.someFunction.calls[0].args).to(equal, ['foo']);
+      expect(TestClass.someFunction.calls[1].args).to(equal, ['bar']);
       expect(TestClass.someFunction.mostRecentCall.args).to(equal, ['bar']);
     });
 
@@ -199,7 +199,7 @@ Screw.Unit(function () {
       spy('grault');
       expect(spy).to(have_been_called_with, ['grault']);
       spy('foo', ['bar', 2], {baz: 'quux'});
-      expect(spy).to(have_been_called_with, 'foo', ['bar', 2], {baz: 'quux'});
+      expect(spy).to(have_been_called_with, ['foo', ['bar', 2], {baz: 'quux'}]);
     });
 
     it("have_been_called_with should fail if the matcher has never been called with the passed arguments", function() {
